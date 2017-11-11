@@ -13,20 +13,126 @@
 		<java.version>1.8</java.version>
 
 		<!-- java dependencies -->
+		<assertj.version>3.8.0</assertj.version>
+		<bcprov-jdk15.version>1.46</bcprov-jdk15.version>
+		<hibernate.version>5.2.12.Final</hibernate.version>
+		<hsqldb.version>2.4.0</hsqldb.version>
+		<jackson.version>2.9.1</jackson.version>
+		<javax.inject.version>1</javax.inject.version>
+		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
 		<junit.version>4.12</junit.version>
+		<logback.version>1.2.3</logback.version>
+		<slf4j.version>1.7.25</slf4j.version>
+		<spring.version>5.0.1.RELEASE</spring.version>
+		<spring-data-jpa.version>2.0.1.RELEASE</spring-data-jpa.version>
+		<web-push.version>3.0.1</web-push.version>
 
 		<!-- maven plugins -->
+		<jetty-maven-plugin.version>9.4.6.v20170531</jetty-maven-plugin.version>
 		<maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
 		<maven-jgit-buildnumber-plugin.version>1.2.9</maven-jgit-buildnumber-plugin.version>
 		<maven-war-plugin.version>2.6</maven-war-plugin.version>
 	</properties>
 
 	<dependencies>
+		<!-- servlet 3 support in eclipse -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- @Inject annotation support -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>${javax.inject.version}</version>
+		</dependency>
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- JSON -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<!-- WebPush API -->
+		<dependency>
+			<groupId>nl.martijndwars</groupId>
+			<artifactId>web-push</artifactId>
+			<version>${web-push.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15 -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15</artifactId>
+			<version>${bcprov-jdk15.version}</version>
+		</dependency>
+
+		<!-- hibernate (JPA implementation) -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring-data-jpa.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>${hibernate.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- database support -->
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>${hsqldb.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+
 		<!-- unit testing -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${assertj.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -39,13 +145,18 @@
 					<version>${maven-compiler-plugin.version}</version>
 				</plugin>
 				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${maven-war-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>${jetty-maven-plugin.version}</version>
+				</plugin>
+				<plugin>
 					<groupId>ru.concerteza.buildnumber</groupId>
 					<artifactId>maven-jgit-buildnumber-plugin</artifactId>
 					<version>${maven-jgit-buildnumber-plugin.version}</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>${maven-war-plugin.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -57,15 +168,6 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
-			</plugin>
-
-			<!-- running without a web.xml -->
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<warName>${project.artifactId}-${project.version}.${git.commitsCount}</warName>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 
@@ -82,6 +184,30 @@
 						<phase>validate</phase>
 					</execution>
 				</executions>
+			</plugin>
+
+			<!-- running without a web.xml -->
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warName>${project.artifactId}-${project.version}.${git.commitsCount}</warName>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+
+			<!-- support: mvn jetty:run -->
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<configuration>
+					<!-- HTTP and HTTPS configuration -->
+					<jettyXml>${project.basedir}/src/test/resources/jetty.xml,${project.basedir}/src/test/resources/jetty-http.xml,${project.basedir}/src/test/resources/jetty-ssl.xml,${project.basedir}/src/test/resources/jetty-https.xml</jettyXml>
+					<webApp>
+						<contextPath>/</contextPath>
+						<!-- only scan spring jars and our classpath for faster startup -->
+						<webInfIncludeJarPattern>.*/spring-[^/]*\.jar$|.*/classes/.*</webInfIncludeJarPattern>
+					</webApp>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
