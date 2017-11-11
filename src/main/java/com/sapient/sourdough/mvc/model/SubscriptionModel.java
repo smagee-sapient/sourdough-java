@@ -71,4 +71,10 @@ public class SubscriptionModel {
 	public void setKeys(Keys keys) {
 		this.keys = keys;
 	}
+
+	@Override
+	public String toString() {
+		return "SubscriptionModel [coord=" + coord + ", hour=" + hour + ", minute=" + minute + ", endpoint=" + endpoint
+				+ ", keys=" + keys + "]";
+	}
 }

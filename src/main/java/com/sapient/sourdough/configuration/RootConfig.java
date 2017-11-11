@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Root web application configuration.
@@ -12,6 +13,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  * @author Ryan Powell
  */
 @Configuration
+@EnableScheduling
 @ComponentScan(basePackages = "com.sapient.sourdough")
 @PropertySource(value = { "classpath:application.properties" })
 public class RootConfig {

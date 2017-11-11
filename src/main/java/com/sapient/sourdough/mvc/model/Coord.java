@@ -34,4 +34,9 @@ public class Coord {
 	public void setLon(String lon) {
 		this.lon = lon;
 	}
+
+	@Override
+	public String toString() {
+		return "Coord [lat=" + lat + ", lon=" + lon + "]";
+	}
 }

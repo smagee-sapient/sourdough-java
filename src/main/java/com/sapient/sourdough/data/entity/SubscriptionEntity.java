@@ -25,10 +25,10 @@ public class SubscriptionEntity {
 	@Column(length = 20, nullable = false)
 	private String lon;
 
-	@Column(length = 2, nullable = false)
+	@Column(length = 10, nullable = false)
 	private String hour;
 
-	@Column(length = 2, nullable = false)
+	@Column(length = 10, nullable = false)
 	private String minute;
 
 	@Column(length = 1024, nullable = false)

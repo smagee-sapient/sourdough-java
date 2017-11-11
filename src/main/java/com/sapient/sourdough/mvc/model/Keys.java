@@ -38,4 +38,9 @@ public class Keys {
 	public void setAuth(String auth) {
 		this.auth = auth;
 	}
+
+	@Override
+	public String toString() {
+		return "Keys [p256dh=" + p256dh + ", auth=" + auth + "]";
+	}
 }

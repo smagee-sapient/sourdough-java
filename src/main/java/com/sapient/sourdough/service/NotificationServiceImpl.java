@@ -74,7 +74,7 @@ public class NotificationServiceImpl implements NotificationService {
 		}
 	}
 
-	@Scheduled(cron = "* * * * *")
+	@Scheduled(cron = "0 * * * * *")
 	public void sendNotifications() throws NumberFormatException, APIException, GeneralSecurityException, IOException,
 			JoseException, ExecutionException, InterruptedException {
 		Calendar calendar = new GregorianCalendar();
