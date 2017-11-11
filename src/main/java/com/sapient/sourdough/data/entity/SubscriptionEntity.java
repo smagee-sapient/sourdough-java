@@ -19,6 +19,18 @@ public class SubscriptionEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(length = 20, nullable = false)
+	private String lat;
+
+	@Column(length = 20, nullable = false)
+	private String lon;
+
+	@Column(length = 2, nullable = false)
+	private String hour;
+
+	@Column(length = 2, nullable = false)
+	private String minute;
+
 	@Column(length = 1024, nullable = false)
 	private String endpoint;
 
@@ -34,6 +46,38 @@ public class SubscriptionEntity {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public String getLat() {
+		return lat;
+	}
+
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+
+	public String getLon() {
+		return lon;
+	}
+
+	public void setLon(String lon) {
+		this.lon = lon;
+	}
+
+	public String getHour() {
+		return hour;
+	}
+
+	public void setHour(String hour) {
+		this.hour = hour;
+	}
+
+	public String getMinute() {
+		return minute;
+	}
+
+	public void setMinute(String minute) {
+		this.minute = minute;
 	}
 
 	public String getEndpoint() {

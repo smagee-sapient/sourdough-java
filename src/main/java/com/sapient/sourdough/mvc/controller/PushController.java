@@ -10,12 +10,16 @@ import org.jose4j.lang.JoseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sapient.sourdough.mvc.model.Notification;
 import com.sapient.sourdough.service.NotificationService;
+
+import net.aksingh.owmjapis.api.APIException;
 
 @RestController
 public class PushController {
@@ -31,5 +35,10 @@ public class PushController {
 	public void sendNotification(@RequestBody Notification notification)
 			throws GeneralSecurityException, IOException, JoseException, ExecutionException, InterruptedException {
 		notificationService.sendNotification(notification.getData());
+	}
+
+	@GetMapping(value = "/weather")
+	public String getWeather(@RequestParam("lat") float lat, @RequestParam("lon") float lon) throws APIException {
+		return notificationService.getCurrentWeather(lat, lon);
 	}
 }
